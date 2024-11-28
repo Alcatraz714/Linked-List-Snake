@@ -1,4 +1,6 @@
 #pragma once
+#include <SFML/System/Vector2.hpp>
+#include "Player/Direction.h"
 
 namespace Player
 {
@@ -15,6 +17,9 @@ namespace Player
 		//const vars and handles
 		const int initial_snake_length = 10;
 		SnakeState current_snake_state;
+		const sf::Vector2i default_position = sf::Vector2i(25, 13);
+		const Direction default_direction = Direction::RIGHT;
+		Direction current_snake_direction;
 
 		//functions
 		void processPlayerInput();
