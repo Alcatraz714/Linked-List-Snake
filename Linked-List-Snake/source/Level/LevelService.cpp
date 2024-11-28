@@ -48,4 +48,9 @@ namespace Level
 	{
 		delete level_controller;
 	}
+
+	void LevelService::spawnPlayer()
+	{
+		ServiceLocator::getInstance()->getPlayerService()->spawnPlayer();
+	}
 }
