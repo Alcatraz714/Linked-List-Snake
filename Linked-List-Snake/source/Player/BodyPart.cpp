@@ -23,7 +23,25 @@ namespace Player
 
 	sf::Vector2f BodyPart::getBodyPartScreenPosition()
 	{
-		return sf::Vector2f();
+		float x_screen_position = LevelView::border_offset_left + (grid_position.x * bodypart_width) + (bodypart_width / 2);
+		float y_screen_position = LevelView::border_offset_top + (grid_position.y * bodypart_height) + (bodypart_height / 2);
+		// we need grid's center position not the xy pixel position
+		return sf::Vector2f(x_screen_position, y_screen_position);
+	}
+
+	float BodyPart::getRotationAngle()
+	{
+		switch (direction)
+		{
+		case Direction::UP:
+			return 270.f;
+		case Direction::DOWN:
+			return 90.f;
+		case Direction::RIGHT:
+			return 0;
+		case Direction::LEFT:
+			return 180.f;
+		}
 	}
 
 	void BodyPart::destroy()
@@ -55,5 +73,17 @@ namespace Player
 	void BodyPart::render()
 	{
 		bodypart_image->render();
+	}
+
+	void BodyPart::updatePosition()
+	{
+		bodypart_image->setPosition(getBodyPartScreenPosition()); //Position
+		bodypart_image->setRotation(getRotationAngle());		  //Rotation
+		bodypart_image->update();								  //Update for draw call after transform is set			
+	}
+
+	void BodyPart::setDirection(Direction direction)
+	{
+		this->direction = direction;
 	}
 }
