@@ -82,8 +82,60 @@ namespace Player
 		bodypart_image->update();								  //Update for draw call after transform is set			
 	}
 
+	Direction BodyPart::getDirection()
+	{
+		return direction;
+	}
+
 	void BodyPart::setDirection(Direction direction)
 	{
 		this->direction = direction;
+	}
+
+	sf::Vector2i BodyPart::getPosition()
+	{
+		return grid_position;
+	}
+
+	void BodyPart::setPosition(sf::Vector2i position)
+	{
+		grid_position = position;
+	}
+
+	sf::Vector2i BodyPart::getNextPosition()
+	{
+		switch (direction)
+		{
+		case Direction::UP:
+			return getNextPositionUp();
+		case Direction::DOWN:
+			return getNextPositionDown();
+		case Direction::RIGHT:
+			return getNextPositionRight();
+		case Direction::LEFT:
+			return getNextPositionLeft();
+		default:
+			return grid_position;
+		}
+	}
+
+	sf::Vector2i BodyPart::getNextPositionDown()
+	{
+		return sf::Vector2i(grid_position.x, grid_position.y + 1);
+	}
+
+	sf::Vector2i BodyPart::getNextPositionUp()
+	{
+		return sf::Vector2i(grid_position.x, grid_position.y - 1);
+	}
+
+	sf::Vector2i BodyPart::getNextPositionRight()
+	{
+		return sf::Vector2i(grid_position.x + 1, grid_position.y);
+	}
+
+	sf::Vector2i BodyPart::getNextPositionLeft()
+	{
+		return sf::Vector2i(grid_position.x - 1, grid_position.y);
 	}
 }
