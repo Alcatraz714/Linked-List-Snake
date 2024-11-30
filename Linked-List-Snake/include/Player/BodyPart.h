@@ -5,10 +5,11 @@
 
 namespace Player
 {
+	using namespace UI::UIElement;
 	class BodyPart
 	{
 	protected:
-		UI::UIElement::ImageView* bodypart_image;
+		ImageView* bodypart_image;
 
 		sf::Vector2i grid_position;
 		Direction direction;
@@ -35,14 +36,14 @@ namespace Player
 		~BodyPart();
 
 		void initialize(float width, float height, sf::Vector2i pos, Direction dir);
+		void updatePosition();
 		void render();
 
 		// functions and callbacks
-		void updatePosition();
 		Direction getDirection();
 		void setDirection(Direction direction);
 		sf::Vector2i getPosition();
-		void setPosition(sf::Vector2i position);
+		//void setPosition(sf::Vector2i position);
 		sf::Vector2i getNextPosition();
 	};
 }

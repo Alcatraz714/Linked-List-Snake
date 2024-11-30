@@ -1,9 +1,12 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
 #include "Player/Direction.h"
+#include "LinkedList/SingleLinkedList.h"
 
 namespace Player
 {
+	using namespace LinkedList;
+
 	enum class SnakeState
 	{
 		ALIVE,
@@ -29,6 +32,10 @@ namespace Player
 		void handleRestart();
 		void reset();
 		void destroy();
+
+		//Linked List
+		LinkedList::SingleLinkedList* single_linked_list;
+		void createLinkedList();
 
 	public:
 
