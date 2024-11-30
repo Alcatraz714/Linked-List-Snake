@@ -1,44 +1,52 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
-#include "Player/Direction.h"
+#include "LinkedList/Node.h"
+#include "LinkedList/SingleLinkedList.h"
 #include "LinkedList/SingleLinkedList.h"
 
 namespace Player
 {
-	using namespace LinkedList;
-
 	enum class SnakeState
 	{
 		ALIVE,
 		DEAD,
 	};
 
+	enum class InputState
+	{
+		WAITING,
+		PROCESSING
+	};
+
 	class SnakeController
 	{
 	private:
-
-		//const vars and handles
 		const int initial_snake_length = 10;
-		SnakeState current_snake_state;
-		const sf::Vector2i default_position = sf::Vector2i(25, 13);
-		const Direction default_direction = Direction::RIGHT;
-		Direction current_snake_direction;
+		const float movement_frame_duration = 0.1f;
+		const float restart_duration = 3.f;
 
-		//functions
+		const sf::Vector2i default_position = sf::Vector2i(25, 13);
+		const LinkedList::Direction default_direction = LinkedList::Direction::RIGHT;
+
+		SnakeState current_snake_state;
+		float elapsed_duration;
+		float restart_counter;
+		LinkedList::Direction current_snake_direction;
+		InputState current_input_state;
+
+		LinkedList::SingleLinkedList* single_linked_list;
+
+		void createLinkedList();
 		void processPlayerInput();
 		void updateSnakeDirection();
+		void delayedUpdate();
 		void moveSnake();
 		void processSnakeCollision();
 		void handleRestart();
 		void reset();
 		void destroy();
 
-		//Linked List
-		LinkedList::SingleLinkedList* single_linked_list;
-		void createLinkedList();
-
 	public:
-
 		SnakeController();
 		~SnakeController();
 
@@ -46,10 +54,8 @@ namespace Player
 		void update();
 		void render();
 
-		//Spawn
 		void spawnSnake();
 		void respawnSnake();
-		//Getter and Setter
 		void setSnakeState(SnakeState state);
 		SnakeState getSnakeState();
 	};

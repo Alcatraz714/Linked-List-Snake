@@ -35,7 +35,7 @@ namespace Player
 		snake_controller->render();
 	}
 
-	void PlayerService::spawnPlayer() 
+	void PlayerService::spawnPlayer()
 	{
 		snake_controller->spawnSnake();
 	}
