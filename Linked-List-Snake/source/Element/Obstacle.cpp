@@ -46,6 +46,11 @@ namespace Element
 		obstacle_image->render();
 	}
 
+	sf::Vector2i Obstacle::getObstaclePosition()
+	{
+		return grid_position;
+	}
+
 	sf::Vector2f Obstacle::getObstacleImagePosition()
 	{
 		float screen_position_x = LevelView::border_offset_left + (cell_width * grid_position.x);
