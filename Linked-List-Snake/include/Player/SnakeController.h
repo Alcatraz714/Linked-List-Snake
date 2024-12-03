@@ -34,13 +34,18 @@ namespace Player
 		InputState current_input_state;
 
 		LinkedList::SingleLinkedList* single_linked_list;
-
+		// Creation and I/O
 		void createLinkedList();
 		void processPlayerInput();
 		void updateSnakeDirection();
 		void delayedUpdate();
 		void moveSnake();
+		// Collision handling 
 		void processSnakeCollision();
+		void processBodyCollision();
+		void processElementsCollision();
+		void processFoodCollision();
+		// Respawn and Restart
 		void handleRestart();
 		void reset();
 		void destroy();
@@ -57,7 +62,6 @@ namespace Player
 		void respawnSnake();
 		void setSnakeState(SnakeState state);
 		SnakeState getSnakeState();
-
 		std::vector<sf::Vector2i> getCurrentSnakePositionList();
 	};
 }
