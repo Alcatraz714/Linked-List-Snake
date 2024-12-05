@@ -57,6 +57,24 @@ namespace LinkedList
 		}
 	}
 
+	void SingleLinkedList::shiftNodesAfterInsertion(Node* new_node, Node* cur_node, Node* prev_node)
+	{
+		Node* next_node = cur_node;
+		cur_node = new_node;
+
+		while (cur_node != nullptr && next_node != nullptr)
+		{
+			cur_node->body_part.setPosition(next_node->body_part.getPosition());
+			cur_node->body_part.setDirection(next_node->body_part.getDirection());
+
+			prev_node = cur_node;
+			cur_node = next_node;
+			next_node = next_node->next;
+		}
+
+		initializeNode(cur_node, prev_node, Operation::TAIL);
+	}
+
 	bool SingleLinkedList::processNodeCollision()
 	{
 		if (head_node == nullptr) return false;
@@ -79,13 +97,14 @@ namespace LinkedList
 
 	void SingleLinkedList::insertNodeAtTail()
 	{
-		Node* new_node = createNode();
+		linked_list_size++;
+		Node* new_node = createNode();// we need a head node for adding the next node
 		Node* cur_node = head_node;
 
-		if (cur_node == nullptr) //If there is no head, then create a new head node
+		if (cur_node == nullptr)
 		{
 			head_node = new_node;
-			new_node->body_part.initialize(node_width, node_height, default_position, default_direction);
+			initializeNode(new_node, nullptr, Operation::TAIL);
 			return;
 		}
 
@@ -95,7 +114,7 @@ namespace LinkedList
 		}
 
 		cur_node->next = new_node;
-		new_node->body_part.initialize(node_width, node_height, getNewNodePosition(cur_node, Operation::TAIL), cur_node->body_part.getDirection());
+		initializeNode(new_node, cur_node, Operation::TAIL);
 	}
 
 	void SingleLinkedList::insertNodeAtHead()
@@ -105,7 +124,7 @@ namespace LinkedList
 
 		if (head_node == nullptr)
 		{
-			head_node = new_node; // we need a head since nextnode position is relative to the last one
+			head_node = new_node; // we need a head since nextnode position is relative
 			initializeNode(new_node, nullptr, Operation::HEAD);
 			return;
 		}
@@ -113,6 +132,36 @@ namespace LinkedList
 		initializeNode(new_node, head_node, Operation::HEAD);
 		new_node->next = head_node;
 		head_node = new_node;
+	}
+
+	void SingleLinkedList::insertNodeAtIndex(int index)
+	{
+		if (index < 0 || index >= linked_list_size) return;
+
+		if (index == 0)
+		{
+			insertNodeAtHead();
+			return;
+		}
+
+		Node* new_node = createNode();
+
+		int current_index = 0;
+		Node* cur_node = head_node;
+		Node* prev_node = nullptr;
+
+		while (cur_node != nullptr && current_index < index)
+		{
+			prev_node = cur_node;
+			cur_node = cur_node->next;
+			current_index++;
+		}
+
+		prev_node->next = new_node;
+		new_node->next = cur_node;
+		initializeNode(new_node, prev_node, Operation::TAIL);
+		linked_list_size++;
+		shiftNodesAfterInsertion(new_node, cur_node, prev_node);
 	}
 
 	void SingleLinkedList::removeNodeAtHead()
