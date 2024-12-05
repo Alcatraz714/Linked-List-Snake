@@ -79,13 +79,14 @@ namespace LinkedList
 
 	void SingleLinkedList::insertNodeAtTail()
 	{
-		Node* new_node = createNode();
+		linked_list_size++;
+		Node* new_node = createNode();// we need a head node for adding the next node
 		Node* cur_node = head_node;
 
-		if (cur_node == nullptr) //If there is no head, then create a new head node
+		if (cur_node == nullptr)
 		{
 			head_node = new_node;
-			new_node->body_part.initialize(node_width, node_height, default_position, default_direction);
+			initializeNode(new_node, nullptr, Operation::TAIL);
 			return;
 		}
 
@@ -95,7 +96,7 @@ namespace LinkedList
 		}
 
 		cur_node->next = new_node;
-		new_node->body_part.initialize(node_width, node_height, getNewNodePosition(cur_node, Operation::TAIL), cur_node->body_part.getDirection());
+		initializeNode(new_node, cur_node, Operation::TAIL);
 	}
 
 	void SingleLinkedList::insertNodeAtHead()
@@ -105,7 +106,7 @@ namespace LinkedList
 
 		if (head_node == nullptr)
 		{
-			head_node = new_node; // we need a head since nextnode position is relative to the last one
+			head_node = new_node; // we need a head since nextnode position is relative
 			initializeNode(new_node, nullptr, Operation::HEAD);
 			return;
 		}
