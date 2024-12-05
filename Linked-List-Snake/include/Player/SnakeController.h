@@ -1,10 +1,12 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
 #include "LinkedList/Node.h"
+#include "Food/FoodType.h"
 #include "LinkedList/SingleLinkedList.h"
 
 namespace Player
 {
+	using namespace Food;
 	enum class SnakeState
 	{
 		ALIVE,
@@ -45,6 +47,7 @@ namespace Player
 		void processBodyCollision();
 		void processElementsCollision();
 		void processFoodCollision();
+		void OnFoodCollected(FoodType food_type);
 		// Respawn and Restart
 		void handleRestart();
 		void reset();
