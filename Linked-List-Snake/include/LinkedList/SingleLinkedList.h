@@ -38,11 +38,13 @@ namespace LinkedList
 		void insertNodeAtTail();
 		void insertNodeAtHead();
 		void insertNodeAtIndex(int index);
+		void insertNodeAtMiddle();
 		void removeNodeAtHead();
 		void removeAllNodes();
 		void updateNodePosition();
 		void updateNodeDirection(Direction direction_to_set);
 		void shiftNodesAfterInsertion(Node* new_node, Node* cur_node, Node* prev_node);
+		int findMiddleNode();
 		std::vector<sf::Vector2i> getNodesPositionList();
 		// Collision and getters/setters
 		bool processNodeCollision();
