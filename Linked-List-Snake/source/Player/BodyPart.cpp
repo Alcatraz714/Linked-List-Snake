@@ -149,6 +149,11 @@ namespace Player
 		return grid_position;
 	}
 
+	void BodyPart::setPosition(sf::Vector2i position)
+	{
+		grid_position = position;
+	}
+
 	void BodyPart::destroy()
 	{
 		delete (bodypart_image);
