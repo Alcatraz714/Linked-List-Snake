@@ -93,7 +93,7 @@ namespace LinkedList
 		}
 
 		cur_node->next = new_node;
-		new_node->body_part.initialize(node_width, node_height, getNewNodePosition(cur_node), cur_node->body_part.getDirection());
+		new_node->body_part.initialize(node_width, node_height, getNewNodePosition(cur_node, Operation::TAIL), cur_node->body_part.getDirection());
 	}
 
 	void SingleLinkedList::removeNodeAtHead()
@@ -120,28 +120,30 @@ namespace LinkedList
 		return new Node();
 	}
 
-	sf::Vector2i SingleLinkedList::getNewNodePosition(Node* reference_node)
+	sf::Vector2i SingleLinkedList::getNewNodePosition(Node* reference_node, Operation operation)
 	{
-		Direction reference_direction = reference_node->body_part.getDirection();
-		sf::Vector2i reference_position = reference_node->body_part.getPosition();
-
-		switch (reference_direction)
+		switch (operation)
 		{
-		case Direction::UP:
-			return sf::Vector2i(reference_position.x, reference_position.y - 1);
-			break;
-		case Direction::DOWN:
-			return sf::Vector2i(reference_position.x, reference_position.y + 1);
-			break;
-		case Direction::LEFT:
-			return sf::Vector2i(reference_position.x + 1, reference_position.y);
-			break;
-		case Direction::RIGHT:
-			return sf::Vector2i(reference_position.x - 1, reference_position.y);
-			break;
+		case Operation::HEAD:
+			return reference_node->body_part.getNextPosition();
+		case Operation::TAIL:
+			return reference_node->body_part.getPrevPosition();
 		}
 
 		return default_position;
+	}
+
+	void SingleLinkedList::initializeNode(Node* new_node, Node* reference_node, Operation operation)
+	{
+		if (reference_node == nullptr)
+		{
+			new_node->body_part.initialize(node_width, node_height, default_position, default_direction);
+			return;
+		}
+
+		sf::Vector2i position = getNewNodePosition(reference_node, operation);
+
+		new_node->body_part.initialize(node_width, node_height, position, reference_node->body_part.getDirection());
 	}
 
 	std::vector<sf::Vector2i> SingleLinkedList::getNodesPositionList()
