@@ -46,6 +46,8 @@ namespace LinkedList
 		void removeNodeAtIndex(int index);
 		void shiftNodesAfterRemoval(Node* cur_node);
 		void removeAllNodes();
+		void removeHalfNodes();
+		Node* findNodeAtIndex(int index);
 		void updateNodePosition();
 		void updateNodeDirection(Direction direction_to_set);
 		void shiftNodesAfterInsertion(Node* new_node, Node* cur_node, Node* prev_node);
