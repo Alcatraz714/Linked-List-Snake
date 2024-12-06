@@ -199,6 +199,7 @@ namespace LinkedList
 
 		cur_node->next = nullptr;
 		delete (cur_node);
+		linked_list_size--; //decrement the size
 	}
 
 	void SingleLinkedList::removeAllNodes()
