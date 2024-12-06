@@ -210,6 +210,29 @@ namespace LinkedList
 		removeNodeAt(midIndex);           // Use the existing function to remove the node at the found index
 	}
 
+	void SingleLinkedList::removeNodeAtTail()
+	{
+		if (head_node == nullptr) return;
+		linked_list_size--; //Decrement linked list size when you are deleting a node
+
+		Node* cur_node = head_node;
+
+		if (cur_node->next == nullptr) //If there is only 1 node in the linked list
+		{
+			removeNodeAtHead();
+			return;
+		}
+
+		while (cur_node->next->next != nullptr) //If there is more than 1 node in the linked list
+		{
+			cur_node = cur_node->next;
+		}
+
+		delete (cur_node->next);
+		cur_node->next = nullptr; //Set the new tail node's next pointer to nullptr
+	}
+
+
 	void SingleLinkedList::removeNodeAt(int index)
 	{
 		if (index < 0 || index >= linked_list_size) return;
