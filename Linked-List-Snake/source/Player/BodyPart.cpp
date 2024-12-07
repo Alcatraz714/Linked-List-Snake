@@ -141,7 +141,14 @@ namespace Player
 
 	void BodyPart::setDirection(Direction new_direction)
 	{
-		direction = new_direction;
+		//direction = new_direction;
+		previous_direction = this->direction;
+		this->direction = new_direction;
+	}
+
+	Direction BodyPart::getPreviousDirection()
+	{
+		return this->previous_direction;// new addition
 	}
 
 	sf::Vector2i BodyPart::getPosition()
