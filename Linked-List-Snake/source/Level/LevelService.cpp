@@ -49,6 +49,11 @@ namespace Level
 		spawnFood();
 	}
 
+	LevelNumber LevelService::getCurrentLevel()
+	{
+		return current_level;
+	}
+
 	float LevelService::getCellWidth()
 	{
 		return level_controller->getCellWidth();

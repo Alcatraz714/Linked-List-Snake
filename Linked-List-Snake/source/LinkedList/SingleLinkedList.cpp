@@ -428,6 +428,11 @@ namespace LinkedList
 		return nodes_position_list;
 	}
 
+	int SingleLinkedList::getLinkedListSize()
+	{
+		return linked_list_size;
+	}
+
 	Node* SingleLinkedList::getHeadNode()
 	{
 		return head_node;
