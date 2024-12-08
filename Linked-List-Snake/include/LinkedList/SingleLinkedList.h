@@ -56,6 +56,7 @@ namespace LinkedList
 		void shiftNodesAfterInsertion(Node* new_node, Node* cur_node, Node* prev_node);
 		int findMiddleNode();
 		std::vector<sf::Vector2i> getNodesPositionList();
+		int getLinkedListSize();
 		// Collision and getters/setters
 		bool processNodeCollision();
 		Node* getHeadNode();

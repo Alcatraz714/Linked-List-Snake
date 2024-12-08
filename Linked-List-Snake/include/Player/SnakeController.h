@@ -7,6 +7,27 @@
 namespace Player
 {
 	using namespace Food;
+
+	enum class TimeComplexity
+	{
+		NONE,
+		ONE,
+		N,
+	};
+
+	enum class LinkedListOperations
+	{
+		NONE,
+		INSERT_AT_HEAD,
+		INSERT_AT_TAIL,
+		INSERT_AT_MID,
+		REMOVE_AT_HEAD,
+		REMOVE_AT_TAIL,
+		REMOVE_AT_MID,
+		DELETE_HALF_LIST,
+		REVERSE_LIST,
+	};
+
 	enum class SnakeState
 	{
 		ALIVE,
@@ -25,6 +46,11 @@ namespace Player
 		const int initial_snake_length = 10;
 		const float movement_frame_duration = 0.1f;
 		const float restart_duration = 3.f;
+		const int minimum_snake_size = 3;
+		int player_score;
+
+		TimeComplexity time_complexity;
+		LinkedListOperations last_linked_list_operation;
 
 		const sf::Vector2i default_position = sf::Vector2i(25, 13);
 		const LinkedList::Direction default_direction = LinkedList::Direction::RIGHT;
@@ -66,5 +92,10 @@ namespace Player
 		void setSnakeState(SnakeState state);
 		SnakeState getSnakeState();
 		std::vector<sf::Vector2i> getCurrentSnakePositionList();
+		int getPlayerScore();
+		bool isSnakeSizeMinimum();
+		//Ops and O(N)
+		TimeComplexity getTimeComplexity();
+		LinkedListOperations getLastOperation();
 	};
 }
