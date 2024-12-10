@@ -1,9 +1,10 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
-#include "LinkedList/Node.h"
+#include "LinkedListLib/Node.h"
 
 namespace LinkedList
 {
+	using namespace LinkedListLib;
 	enum class Operation
 	{
 		HEAD,
