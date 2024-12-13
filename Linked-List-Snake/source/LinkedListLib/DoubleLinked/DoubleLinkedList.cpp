@@ -9,7 +9,7 @@ namespace LinkedListLib
 	{
 		Node* DoubleLinkedList::createNode()
 		{
-			return nullptr;
+			return new DoubleNode();
 		}
 
 		DoubleLinkedList::DoubleLinkedList() = default;
@@ -45,13 +45,17 @@ namespace LinkedListLib
 
 			if (head_node == nullptr)
 			{
-				head_node = new_node; // we need a head since nextnode position is relative
+				head_node = new_node;
+				static_cast<DoubleNode*>(new_node)->previous = nullptr;
 				initializeNode(new_node, nullptr, Operation::HEAD);
 				return;
 			}
 
 			initializeNode(new_node, head_node, Operation::HEAD);
+
 			new_node->next = head_node;
+			static_cast<DoubleNode*>(head_node)->previous = new_node;
+
 			head_node = new_node;
 		}
 
