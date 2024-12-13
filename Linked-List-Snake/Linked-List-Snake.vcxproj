@@ -142,7 +142,9 @@
     <ClCompile Include="source\Level\LevelModel.cpp" />
     <ClCompile Include="source\Level\LevelService.cpp" />
     <ClCompile Include="source\Level\LevelView.cpp" />
-    <ClCompile Include="source\LinkedList\SingleLinkedList.cpp" />
+    <ClCompile Include="source\LinkedListLib\DoubleLinked\DoubleLinkedList.cpp" />
+    <ClCompile Include="source\LinkedListLib\LinkedList.cpp" />
+    <ClCompile Include="source\LinkedListLib\SingleLinked\SingleLinkedList.cpp" />
     <ClCompile Include="source\Player\BodyPart.cpp" />
     <ClCompile Include="source\Player\PlayerService.cpp" />
     <ClCompile Include="source\Player\SnakeController.cpp" />
@@ -180,10 +182,14 @@
     <ClInclude Include="include\Level\LevelNumber.h" />
     <ClInclude Include="include\Level\LevelService.h" />
     <ClInclude Include="include\Level\LevelView.h" />
-    <ClInclude Include="include\LinkedList\SingleLinkedList.h" />
+    <ClInclude Include="include\LinkedListLib\DoubleLinked\DoubleLinkedList.h" />
+    <ClInclude Include="include\LinkedListLib\DoubleLinked\DoubleNode.h" />
+    <ClInclude Include="include\LinkedListLib\LinkedList.h" />
+    <ClInclude Include="include\LinkedListLib\SingleLinked\SingleLinkedList.h" />
+    <ClInclude Include="include\LinkedListLib\SingleLinked\SingleNode.h" />
     <ClInclude Include="include\Player\BodyPart.h" />
     <ClInclude Include="include\Player\Direction.h" />
-    <ClInclude Include="include\LinkedList\Node.h" />
+    <ClInclude Include="include\LinkedListLib\Node.h" />
     <ClInclude Include="include\Player\PlayerService.h" />
     <ClInclude Include="include\Player\SnakeController.h" />
     <ClInclude Include="include\Time\TimeService.h" />
