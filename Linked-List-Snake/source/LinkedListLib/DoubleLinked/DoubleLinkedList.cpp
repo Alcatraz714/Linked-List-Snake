@@ -110,23 +110,24 @@ namespace LinkedListLib
 		void DoubleLinkedList::removeNodeAtTail()
 		{
 			if (head_node == nullptr) return;
-			linked_list_size--; //Decrement linked list size when you are deleting a node
+			linked_list_size--;
 
 			Node* cur_node = head_node;
 
-			if (cur_node->next == nullptr) //If there is only 1 node in the linked list
+			if (cur_node->next == nullptr)
 			{
 				removeNodeAtHead();
 				return;
 			}
 
-			while (cur_node->next->next != nullptr) //If there is more than 1 node in the linked list
+			while (cur_node->next != nullptr)
 			{
 				cur_node = cur_node->next;
 			}
-
-			delete (cur_node->next);
-			cur_node->next = nullptr;
+			// We use direct access to the second last node
+			Node* previous = static_cast<DoubleNode*>(cur_node)->previous;
+			previous->next = nullptr;
+			delete (cur_node);
 		}
 
 		void DoubleLinkedList::removeNodeAtHead()
