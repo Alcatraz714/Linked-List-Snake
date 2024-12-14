@@ -104,7 +104,20 @@ namespace LinkedListLib
 
 		void DoubleLinkedList::shiftNodesAfterInsertion(Node* new_node, Node* cur_node, Node* prev_node)
 		{
-			
+			Node* next_node = cur_node;
+			cur_node = new_node;
+
+			while (cur_node != nullptr && next_node != nullptr)
+			{
+				cur_node->body_part.setPosition(next_node->body_part.getPosition());
+				cur_node->body_part.setDirection(next_node->body_part.getDirection());
+
+				prev_node = cur_node;
+				cur_node = next_node;
+				next_node = next_node->next;
+			}
+
+			initializeNode(cur_node, prev_node, Operation::TAIL);
 		}
 
 		void DoubleLinkedList::removeNodeAtTail()
@@ -205,7 +218,22 @@ namespace LinkedListLib
 
 		void DoubleLinkedList::shiftNodesAfterRemoval(Node* cur_node)
 		{
-			
+			sf::Vector2i previous_node_position = cur_node->body_part.getPosition();
+			Direction previous_node_direction = cur_node->body_part.getDirection();
+			cur_node = cur_node->next;
+
+			while (cur_node != nullptr)
+			{
+				sf::Vector2i temp_node_position = cur_node->body_part.getPosition();
+				Direction temp_node_direction = cur_node->body_part.getDirection();
+
+				cur_node->body_part.setPosition(previous_node_position);
+				cur_node->body_part.setDirection(previous_node_direction);
+
+				cur_node = cur_node->next;
+				previous_node_position = temp_node_position;
+				previous_node_direction = temp_node_direction;
+			}
 		}
 
 		Direction DoubleLinkedList::reverse()
