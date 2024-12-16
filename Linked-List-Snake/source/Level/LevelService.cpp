@@ -2,12 +2,14 @@
 #include "Level/LevelController.h"
 #include "Global/ServiceLocator.h"
 #include "Element/ElementService.h"
+#include "Food/FoodService.h"
 #include "Level/LevelModel.h"
 
 namespace Level
 {
 	using namespace Global;
 	using namespace Element;
+	using namespace Food;
 
 	LevelService::LevelService()
 	{
@@ -41,17 +43,17 @@ namespace Level
 		level_controller->render();
 	}
 
-	void LevelService::createLevel(LevelNumber level_to_load)
+	void LevelService::createLevel(LinkedListType linked_list_type)
 	{
-		current_level = level_to_load;
-		spawnLevelElements(level_to_load);
-		spawnPlayer();
+		current_linked_list_type = linked_list_type;
+		spawnLevelElements(current_level);
 		spawnFood();
+		spawnPlayer();
 	}
 
-	LevelNumber LevelService::getCurrentLevel()
+	void LevelService::setCurrentLevelNumber(LevelNumber level_to_load)
 	{
-		return current_level;
+		current_level = level_to_load;
 	}
 
 	float LevelService::getCellWidth()
@@ -64,13 +66,25 @@ namespace Level
 		return level_controller->getCellHeight();
 	}
 
+	LevelNumber LevelService::getCurrentLevel()
+	{
+		return current_level;
+	}
+
+	LinkedListType LevelService::getCurrentLinkedListType()
+	{
+		return current_linked_list_type;
+	}
+
 	void LevelService::spawnPlayer()
 	{
-		ServiceLocator::getInstance()->getPlayerService()->spawnPlayer();
+		ServiceLocator::getInstance()->getPlayerService()->spawnPlayer(current_linked_list_type);
 	}
 
 	void LevelService::spawnLevelElements(LevelNumber level_to_load)
 	{
+		current_level = level_to_load;
+
 		float cell_width = level_controller->getCellWidth();
 		float cell_height = level_controller->getCellHeight();
 
@@ -80,6 +94,9 @@ namespace Level
 
 	void LevelService::spawnFood()
 	{
+		float cell_width = level_controller->getCellWidth();
+		float cell_height = level_controller->getCellHeight();
+
 		ServiceLocator::getInstance()->getFoodService()->startFoodSpawning();
 	}
 
