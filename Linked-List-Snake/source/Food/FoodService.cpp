@@ -58,17 +58,6 @@ namespace Food
 		reset();
 	}
 
-	bool FoodService::processFoodCollision(LinkedList::Node* head_node, FoodType& out_food_type)
-	{
-		if (current_food_item && current_food_item->getFoodPosition() == head_node->body_part.getPosition())
-		{
-			out_food_type = current_food_item->getFoodType();
-			return true;
-		}
-
-		return false;
-	}
-
 	FoodItem* FoodService::createFood(sf::Vector2i position, FoodType type)
 	{
 		FoodItem* food = new FoodItem();
@@ -88,7 +77,7 @@ namespace Food
 		sf::Vector2i spawn_position;
 
 		do spawn_position = getRandomPosition();
-		while (!isValidPosition(player_position_data, spawn_position) || !isValidPosition(elements_position_data, spawn_position));
+		while (!isValidPosition(player_position_data, elements_position_data, spawn_position));
 
 		return spawn_position;
 	}
@@ -107,7 +96,6 @@ namespace Food
 
 	FoodType FoodService::getRandomFoodType()
 	{
-
 		if (ServiceLocator::getInstance()->getPlayerService()->isSnakeSizeMinimum())
 		{
 			int randomValue = std::rand() % (FoodItem::number_of_foods - FoodItem::number_of_healthy_foods);
@@ -118,27 +106,20 @@ namespace Food
 			int randomValue = std::rand() % (FoodItem::number_of_foods);
 			return static_cast<FoodType>(randomValue);
 		}
-
-
-
-		int food_upper_index;
-
-		if (!ServiceLocator::getInstance()->getPlayerService()->isSnakeSizeMinimum())
-			food_upper_index = FoodItem::number_of_foods - 5;
-		else
-			food_upper_index = FoodItem::number_of_foods - 1;
-
-		std::uniform_int_distribution<int> distribution(0, food_upper_index);
-
-		return static_cast<FoodType>(distribution(random_engine));
 	}
 
-	bool FoodService::isValidPosition(std::vector<sf::Vector2i> position_data, sf::Vector2i food_position)
+	bool FoodService::isValidPosition(std::vector<sf::Vector2i> player_position_data, std::vector<sf::Vector2i> elements_position_data, sf::Vector2i food_position)
 	{
-		for (int i = 0; i < position_data.size(); i++)
+		for (int i = 0; i < player_position_data.size(); i++)
 		{
-			if (food_position == position_data[i]) return false;
+			if (food_position == player_position_data[i]) return false;
 		}
+
+		for (int i = 0; i < elements_position_data.size(); i++)
+		{
+			if (food_position == elements_position_data[i]) return false;
+		}
+
 		return true;
 	}
 
@@ -155,6 +136,8 @@ namespace Food
 
 	void FoodService::handleFoodSpawning()
 	{
+		if (ServiceLocator::getInstance()->getPlayerService()->isPlayerDead()) return;
+
 		if (elapsed_duration >= spawn_duration)
 		{
 			destroyFood();
@@ -166,5 +149,16 @@ namespace Food
 	void FoodService::reset()
 	{
 		elapsed_duration = 0.f;
+	}
+
+	bool FoodService::processFoodCollision(LinkedListLib::Node* head_node, FoodType& out_food_type)
+	{
+		if (current_food_item && current_food_item->getFoodPosition() == head_node->body_part.getPosition())
+		{
+			out_food_type = current_food_item->getFoodType();
+			return true;
+		}
+
+		return false;
 	}
 }

@@ -1,10 +1,12 @@
 #pragma once
 #include <vector>
 #include <SFML/System/Vector2.hpp>
-#include "Player/SnakeController.h"h
+#include "Level/LevelService.h"
+#include "Player/SnakeController.h"
 
 namespace Player
 {
+	using namespace Level;
 	class SnakeController;
 
 	class PlayerService
@@ -22,11 +24,16 @@ namespace Player
 		void initialize();
 		void update();
 		void render();
-		std::vector<sf::Vector2i> getCurrentSnakePositionList();
-		void spawnPlayer();
+
+		void spawnPlayer(LinkedListType level_type);
+
+		int getSnakeSize();
 		int getPlayerScore();
 		bool isSnakeSizeMinimum();
 		TimeComplexity getTimeComplexity();
+		bool isPlayerDead();
 		LinkedListOperations getLastOperation();
+		SnakeState getSnakeState();
+		std::vector<sf::Vector2i> getCurrentSnakePositionList();
 	};
 }

@@ -4,13 +4,12 @@
 #include "Level/LevelController.h"
 #include "Element/Obstacle.h"
 #include "Level/LevelModel.h"
-#include <LinkedList/Node.h>
 
 namespace Element
 {
 	ElementService::ElementService() = default;
 
-	ElementService::~ElementService() = default;
+	ElementService::~ElementService() { destroy(); }
 
 	void ElementService::initialize() { }
 
@@ -32,6 +31,8 @@ namespace Element
 
 	const void ElementService::spawnElements(std::vector<ElementData>& element_data_list, float cell_width, float cell_height)
 	{
+		reset();
+
 		for (int i = 0; i < element_data_list.size(); i++)
 		{
 			switch (element_data_list[i].element_type)
@@ -41,6 +42,14 @@ namespace Element
 				break;
 			}
 		}
+	}
+
+	void ElementService::spawnObstacle(sf::Vector2i position, float cell_width, float cell_height)
+	{
+		Obstacle* obstacle = new Obstacle();
+
+		obstacle->initialize(position, cell_width, cell_height);
+		obstacle_list.push_back(obstacle);
 	}
 
 	std::vector<sf::Vector2i> ElementService::getElementsPositionList()
@@ -55,7 +64,7 @@ namespace Element
 		return elements_position_list;
 	}
 
-	bool ElementService::processElementsCollision(LinkedList::Node* head_node)
+	bool ElementService::processElementsCollision(LinkedListLib::Node* head_node)
 	{
 		for (int i = 0; i < obstacle_list.size(); i++)
 		{
@@ -69,11 +78,11 @@ namespace Element
 		return false;
 	}
 
-	void ElementService::spawnObstacle(sf::Vector2i position, float cell_width, float cell_height)
-	{
-		Obstacle* obstacle = new Obstacle();
+	void ElementService::reset() { destroy(); }
 
-		obstacle->initialize(position, cell_width, cell_height);
-		obstacle_list.push_back(obstacle);
+	void ElementService::destroy()
+	{
+		for (int i = 0; i < obstacle_list.size(); i++) delete (obstacle_list[i]);
+		obstacle_list.clear();
 	}
 }

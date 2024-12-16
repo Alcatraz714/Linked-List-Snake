@@ -1,6 +1,4 @@
 #pragma once
-#include <SFML/System/Vector2.hpp>
-#include "LinkedListLib/DoubleLinked/DoubleNode.h"
 #include "LinkedListLib/LinkedList.h"
 
 namespace LinkedListLib
